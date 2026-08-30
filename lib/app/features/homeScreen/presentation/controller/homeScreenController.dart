@@ -39,22 +39,42 @@ class HomeController extends GetxController {
       isLoading.value = true;
       update();
       
-      // Fetch both top headlines and latest news from today concurrently
-      final results = await Future.wait([
-        _getTopHeadlinesUseCase(category: selectedCategory.value.name, page: 1),
-        _getLatestNewsUseCase(category: selectedCategory.value.name, page: 1),
+      List<ArticleEntity> fetchedHeadlines = [];
+      List<ArticleEntity> fetchedLatest = [];
+      String? errorMessage;
+
+      // Fetch both top headlines and latest news concurrently, catching errors individually
+      await Future.wait([
+        _getTopHeadlinesUseCase(category: selectedCategory.value.name, page: 1)
+            .then((value) => fetchedHeadlines = value)
+            .catchError((e) {
+          errorMessage = e.toString().replaceFirst('Exception: ', '');
+          return <ArticleEntity>[];
+        }),
+        _getLatestNewsUseCase(category: selectedCategory.value.name, page: 1)
+            .then((value) => fetchedLatest = value)
+            .catchError((e) {
+          errorMessage = e.toString().replaceFirst('Exception: ', '');
+          return <ArticleEntity>[];
+        }),
       ]);
 
-      final fetchedHeadlines = results[0];
-      final fetchedLatest = results[1];
-
-      articles.assignAll(fetchedHeadlines);
-      latestArticles.assignAll(fetchedLatest);
-
       if (fetchedHeadlines.isNotEmpty) {
+        articles.assignAll(fetchedHeadlines);
         featuredArticle.value = fetchedHeadlines.first;
       } else {
         featuredArticle.value = null;
+        articles.clear();
+      }
+
+      if (fetchedLatest.isNotEmpty) {
+        latestArticles.assignAll(fetchedLatest);
+      } else {
+        latestArticles.clear();
+      }
+
+      if (errorMessage != null && articles.isEmpty && latestArticles.isEmpty) {
+        Get.snackbar('Error', errorMessage!);
       }
     } catch (e) {
       Get.snackbar('Error', e.toString());

@@ -15,6 +15,37 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
 
   NewsRemoteDataSourceImpl({required this.client});
 
+  void _handleErrorResponse(http.Response response, String defaultMsg) {
+    if (response.statusCode == 429) {
+      throw Exception("Oops! We've reached the news provider's daily limit of 100 free requests. Please try again later or check back tomorrow!");
+    }
+
+    String? apiErrorMessage;
+    try {
+      final Map<String, dynamic> data = json.decode(response.body);
+      final String? code = data['code']?.toString();
+      final String? msg = data['message']?.toString();
+
+      if (code == 'rateLimited' || 
+          (msg != null && (msg.toLowerCase().contains('rate limit') || msg.toLowerCase().contains('too many requests')))) {
+        throw Exception("Oops! We've reached the news provider's daily limit of 100 free requests. Please try again later or check back tomorrow!");
+      }
+
+      if (msg != null) {
+        apiErrorMessage = msg;
+      }
+    } catch (e) {
+      if (e.toString().contains("Oops!")) {
+        rethrow;
+      }
+    }
+
+    if (apiErrorMessage != null) {
+      throw Exception(apiErrorMessage);
+    }
+    throw Exception('$defaultMsg (Status: ${response.statusCode})');
+  }
+
   @override
   Future<List<ArticleModel>> fetchTopHeadlines({required String category, required int page}) async {
     final queryCategory = category.toLowerCase();
@@ -38,12 +69,13 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
         }
       } else {
         AppLogger.w('HTTP Response failed: status code ${response.statusCode}');
-        throw Exception('Failed to load headlines: ${response.statusCode}');
+        _handleErrorResponse(response, 'Failed to load headlines');
       }
     } catch (e, stackTrace) {
       AppLogger.e('Exception inside fetchTopHeadlines', e, stackTrace);
-      throw Exception('Error occurred: $e');
+      rethrow;
     }
+    throw Exception('Failed to fetch headlines');
   }
 
   @override
@@ -70,12 +102,13 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
         }
       } else {
         AppLogger.w('HTTP Response failed: status code ${response.statusCode}');
-        throw Exception('Failed to load latest news: ${response.statusCode}');
+        _handleErrorResponse(response, 'Failed to load latest news');
       }
     } catch (e, stackTrace) {
       AppLogger.e('Exception inside fetchLatestNews', e, stackTrace);
-      throw Exception('Error occurred: $e');
+      rethrow;
     }
+    throw Exception('Failed to fetch latest news');
   }
 
   @override
@@ -101,11 +134,12 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
         }
       } else {
         AppLogger.w('HTTP Response failed: status code ${response.statusCode}');
-        throw Exception('Failed to perform search: ${response.statusCode}');
+        _handleErrorResponse(response, 'Failed to perform search');
       }
     } catch (e, stackTrace) {
       AppLogger.e('Exception inside searchNews', e, stackTrace);
-      throw Exception('Error occurred: $e');
+      rethrow;
     }
+    throw Exception('Failed to execute search');
   }
 }
