@@ -74,10 +74,13 @@ class LatestNewsCards extends StatelessWidget {
                       children: [
                         Text(
                           source.value,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             color: Color(0xFF1A237E),
                             fontWeight: FontWeight.bold,
                             fontSize: 11,
+                            fontFamily: 'Inter',
                           ),
                         ),
                         GestureDetector(
@@ -109,15 +112,19 @@ class LatestNewsCards extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
                           color: Colors.black87,
+                          fontFamily: 'Newsreader',
                         ),
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       "${author.value.isNotEmpty ? '${author.value} • ' : ''}${publishedAt.value.split('T').first}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 10,
+                        fontFamily: 'Inter',
                       ),
                     ),
                   ],

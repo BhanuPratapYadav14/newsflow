@@ -92,10 +92,10 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
               },
             );
           }),
-          IconButton(
-            icon: const Icon(Icons.home, color: Color(0xFF1A237E)),
-            onPressed: () => Get.offAllNamed(AppPageName.home),
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.home, color: Color(0xFF1A237E)),
+          //   onPressed: () => Get.offAllNamed(AppPageName.home),
+          // ),
         ],
       ),
       body: article.url.isEmpty

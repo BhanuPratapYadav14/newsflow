@@ -7,6 +7,7 @@ import '../models/article_model.dart';
 abstract class NewsRemoteDataSource {
   Future<List<ArticleModel>> fetchTopHeadlines({required String category, required int page});
   Future<List<ArticleModel>> fetchLatestNews({required String category, required int page});
+  Future<List<ArticleModel>> searchNews({required String query});
 }
 
 class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
@@ -73,6 +74,37 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
       }
     } catch (e, stackTrace) {
       AppLogger.e('Exception inside fetchLatestNews', e, stackTrace);
+      throw Exception('Error occurred: $e');
+    }
+  }
+
+  @override
+  Future<List<ArticleModel>> searchNews({required String query}) async {
+    final encodedQuery = Uri.encodeComponent(query);
+    final url = Uri.parse(
+        '${AppConstant.BASE_URL}everything?q=$encodedQuery&sortBy=relevance&pageSize=20&apiKey=${AppConstant.API_KEY}');
+    try {
+      AppLogger.i('GET Search request to: $url');
+      final response = await client.get(url);
+      AppLogger.d('GET Search response status: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        if (data['status'] == 'ok') {
+          final List<dynamic> articlesJson = data['articles'] ?? [];
+          AppLogger.d('Search results: fetched ${articlesJson.length} articles successfully.');
+          return articlesJson.map((json) => ArticleModel.fromJson(json)).toList();
+        } else {
+          final errorMsg = data['message'] ?? 'Failed to perform search';
+          AppLogger.w('API Warning: $errorMsg');
+          throw Exception(errorMsg);
+        }
+      } else {
+        AppLogger.w('HTTP Response failed: status code ${response.statusCode}');
+        throw Exception('Failed to perform search: ${response.statusCode}');
+      }
+    } catch (e, stackTrace) {
+      AppLogger.e('Exception inside searchNews', e, stackTrace);
       throw Exception('Error occurred: $e');
     }
   }

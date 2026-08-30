@@ -14,7 +14,10 @@ class Homescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Appbar(onProfileTap: () {}, onSearchTap: () {}),
+      appBar: Appbar(
+        onProfileTap: () {},
+        onSearchTap: () => Get.toNamed(AppPageName.search),
+      ),
       body: GetBuilder<HomeController>(
         builder: (controller) {
           return RefreshIndicator(
@@ -52,6 +55,7 @@ class Homescreen extends StatelessWidget {
                                 style: TextStyle(
                                   color: isSelected ? Colors.white : Colors.black87,
                                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                  fontFamily: 'Inter',
                                 ),
                               ),
                               selected: isSelected,
@@ -71,6 +75,7 @@ class Homescreen extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Newsreader',
                             ),
                           ),
                           TextButton(
@@ -82,6 +87,7 @@ class Homescreen extends StatelessWidget {
                               style: TextStyle(
                                 color: Color(0xFF1A237E),
                                 fontWeight: FontWeight.bold,
+                                fontFamily: 'Inter',
                               ),
                             ),
                           )
@@ -126,7 +132,13 @@ class Homescreen extends StatelessWidget {
                         children: [
                           const Text(
                             "Latest News",
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 20, 
+                              fontWeight: FontWeight.w600, 
+                              fontFamily: 'Newsreader',
+                              height: 25/20,
+                              letterSpacing: -0.5
+                              ),
                           ),
                           TextButton(
                             onPressed: () {
@@ -137,6 +149,7 @@ class Homescreen extends StatelessWidget {
                               style: TextStyle(
                                 color: Color(0xFF1A237E),
                                 fontWeight: FontWeight.bold,
+                                fontFamily: 'Inter',
                               ),
                             ),
                           )

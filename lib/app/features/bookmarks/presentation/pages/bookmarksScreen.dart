@@ -14,6 +14,7 @@ class BookmarksScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFCF9F8),
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         title: const Text(
           "Bookmarks",
           style: TextStyle(
@@ -24,12 +25,12 @@ class BookmarksScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0.5,
         iconTheme: const IconThemeData(color: Color(0xFF1A237E)),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () => Get.offAllNamed(AppPageName.home),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.home),
+        //     onPressed: () => Get.offAllNamed(AppPageName.home),
+        //   ),
+        // ],
       ),
       body: Obx(() {
         final bookmarks = bookmarkController.bookmarkedArticles;

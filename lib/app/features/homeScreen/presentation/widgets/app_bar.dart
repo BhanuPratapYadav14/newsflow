@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import '../../../../core/constant/appImage.dart';
 import '../../../../core/routes/appPageName.dart';
 
 class Appbar extends StatelessWidget implements PreferredSizeWidget {
@@ -37,6 +35,7 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
                   color: Color(0xFF1A237E),
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
+                  fontFamily: 'Newsreader',
                 ),
               ),
             ),
@@ -49,20 +48,20 @@ class Appbar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: () => Get.toNamed(AppPageName.bookmarks),
                   icon: const Icon(Icons.bookmark_outline, color: Color(0xFF1A237E)),
                 ),
-                const SizedBox(width: 8),
-                GestureDetector(
-                  onTap: onProfileTap,
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1A237E),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: SvgPicture.asset(AppImage.profile),
-                  ),
-                ),
+                // const SizedBox(width: 8),
+                // GestureDetector(
+                //   onTap: onProfileTap,
+                //   child: Container(
+                //     width: 32,
+                //     height: 32,
+                //     padding: const EdgeInsets.all(8),
+                //     decoration: BoxDecoration(
+                //       color: const Color(0xFF1A237E),
+                //       borderRadius: BorderRadius.circular(100),
+                //     ),
+                //     child: SvgPicture.asset(AppImage.profile),
+                //   ),
+                // ),
               ],
             ),
           ],

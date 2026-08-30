@@ -66,6 +66,7 @@ class FeaturedNewsCard extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'Inter',
                           ),
                         ),
                       ),
@@ -84,6 +85,7 @@ class FeaturedNewsCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 12,
+                      fontFamily: 'Inter',
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -97,6 +99,7 @@ class FeaturedNewsCard extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
+                        fontFamily: 'Newsreader',
                       ),
                     ),
                   ),
@@ -110,6 +113,7 @@ class FeaturedNewsCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black54,
+                        fontFamily: 'Inter',
                       ),
                     ),
                   ),

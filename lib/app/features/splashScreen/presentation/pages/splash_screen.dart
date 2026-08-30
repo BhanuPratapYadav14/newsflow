@@ -49,13 +49,14 @@ class SplashScreen extends StatelessWidget {
               )),
               SizedBox(height: 28),
               Padding(
-              padding: EdgeInsets.fromLTRB(135,0,135,0),
+              padding: EdgeInsets.fromLTRB(125,0,125,0),
               child: Text(
                 "NewsFlow".toUpperCase(),
               style: TextStyle(
                 color: Color(0xFF000666), 
                 fontSize: 16,
                 fontWeight: FontWeight.w300,
+                fontFamily: 'Newsreader',
               ),),),
 
               Padding(
@@ -81,7 +82,8 @@ class SplashScreen extends StatelessWidget {
                     fontSize: 16,
                     fontWeight: FontWeight.w300,
                     letterSpacing: 2.0,
-                    height: 25/16
+                    height: 25/16,
+                    fontFamily: 'Newsreader',
                   ),
                 )
                   ],

@@ -38,4 +38,9 @@ class NewsRepositoryImpl implements NewsRepository {
   bool isBookmarked(ArticleEntity article) {
     return localDataSource.isBookmarked(article.url);
   }
+
+  @override
+  Future<List<ArticleEntity>> searchNews({required String query}) async {
+    return await remoteDataSource.searchNews(query: query);
+  }
 }

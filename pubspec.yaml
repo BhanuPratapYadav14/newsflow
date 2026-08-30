@@ -71,6 +71,28 @@ flutter:
     - assets/image/
     - assets/icon/
     - assets/logo/
+
+  fonts:
+    - family: Newsreader
+      fonts:
+        - asset: assets/fonts/Newsreader_9pt-Regular.ttf
+        - asset: assets/fonts/Newsreader_9pt-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Newsreader_9pt-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Newsreader_9pt-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Newsreader_9pt-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Newsreader_9pt-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Newsreader_9pt-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Newsreader_9pt-BoldItalic.ttf
+          weight: 700
+          style: italic
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -6,4 +6,5 @@ abstract class NewsRepository {
   Future<List<ArticleEntity>> getBookmarks();
   Future<void> toggleBookmark(ArticleEntity article);
   bool isBookmarked(ArticleEntity article);
+  Future<List<ArticleEntity>> searchNews({required String query});
 }
